@@ -60,8 +60,7 @@
     transition: border-color 0.3s;
   }
 
-  .nav-logo { display: flex; align-items: center; text-decoration: none; height: 38px; }
-  .nav-logo img { height: 38px; width: auto; display: block; }
+  .nav-logo { display: flex; align-items: center; text-decoration: none; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--gold); letter-spacing: 0.1em; }
 
   .nav-links { display: flex; gap: 32px; list-style: none; }
   .nav-links a {
@@ -129,17 +128,7 @@
     animation: blink 1.5s ease infinite;
   }
 
-  .hero-logo {
-    margin-bottom: 28px;
-    animation: fadeUp 0.7s ease 0.05s both;
-  }
-  /* Show the logo-title (with Chinese text) in hero, white version */
-  .hero-logo img {
-    height: 72px; width: auto;
-    /* Invert to white since bg is dark */
-    filter: brightness(0) invert(1);
-    opacity: 0.92;
-  }
+  /* HERO headings */
 
   .hero h1 {
     font-family: 'Syne', sans-serif;
@@ -411,8 +400,7 @@
     display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 44px;
     padding-bottom: 36px;
   }
-  .ft-logo { margin-bottom: 14px; }
-  .ft-logo img { height: 30px; width: auto; filter: brightness(0) invert(1); opacity: 0.65; }
+  .ft-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: var(--gold); margin-bottom: 14px; opacity: 0.8; }
   .ft-desc { font-size: 11px; color: var(--muted); line-height: 1.85; max-width: 220px; }
   .fc-t { font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; }
   .fc-l { list-style: none; }
@@ -455,10 +443,7 @@
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#" class="nav-logo">
-    <img src="logo-title.png" alt="maollar 喵樂商城"
-      onerror="this.src='logo.png'; this.style.height='32px'">
-  </a>
+  <a href="#" class="nav-logo">MAOLLAR</a>
   <ul class="nav-links">
     <li><a href="#protocol">Protocol</a></li>
     <li><a href="#tokenomics">Tokenomics</a></li>
@@ -474,10 +459,6 @@
 <div class="hero">
   <div class="hero-glow"></div>
   <div class="hero-badge">MAO · Decentralized Supply Chain Protocol</div>
-  <div class="hero-logo">
-    <img src="logo-title.png" alt="maollar 喵樂商城"
-      onerror="this.src='logo.png'; this.style.height='56px'">
-  </div>
   <h1>Consumer<span class="o">-Owned.</span><br><span class="i">Mathematically</span> Appreciating.</h1>
   <p class="hero-sub">Native AI-Driven Decentralized Supply Chain</p>
   <p class="hero-desc">
@@ -676,9 +657,7 @@
   <div class="ft-inner">
     <div class="ft-top">
       <div>
-        <div class="ft-logo">
-          <img src="logo-title.png" alt="maollar" onerror="this.src='logo.png'; this.style.height='26px'">
-        </div>
+        <div class="ft-logo">MAOLLAR</div>
         <div class="ft-desc">Autonomous Protocol. Community Owned.<br>Consumer-Owned · AI-Driven · Mathematically Appreciating.<br><br>Registered in Singapore · Settled on Solana Mainnet</div>
       </div>
       <div>
