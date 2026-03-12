@@ -338,6 +338,19 @@
   }
   .fig-cap span { color: var(--gold); }
 
+  /* FIG 2 SVG ANIMATION */
+  .fig.v .bar { transform: scaleY(1) !important; }
+  .fig.v .line-fund { stroke-dashoffset: 0 !important; }
+  .fig.v .curve-value { stroke-dashoffset: 0 !important; }
+  .fig .bar:nth-child(1) { transition-delay: 0.1s; }
+  .fig .bar:nth-child(2) { transition-delay: 0.2s; }
+  .fig .bar:nth-child(3) { transition-delay: 0.3s; }
+  .fig .bar:nth-child(4) { transition-delay: 0.4s; }
+  .fig .bar:nth-child(5) { transition-delay: 0.5s; }
+  .fig .bar:nth-child(6) { transition-delay: 0.6s; }
+  .fig .bar:nth-child(7) { transition-delay: 0.7s; }
+  .fig .bar:nth-child(8) { transition-delay: 0.8s; }
+
   /* TOKENOMICS */
   .tok2 {
     display: grid; grid-template-columns: 1fr 1fr;
@@ -611,9 +624,42 @@
       <div class="chart-t">Value and Scarcity Projections</div>
       <div class="chart-s">Institutional Grade Analysis — MAO Unit Value (G Series) vs Token Count (D Series) · Hover to reveal in full color</div>
     </div>
-    <div class="fig" style="border:none; border-top: 1px solid var(--border);">
-      <div class="fig-inner"><img src="Figure_2.png" alt="Maollar Tokenomics Growth Curve"></div>
-      <div class="fig-cap"><span>Figure 2</span> Tokenomics Value and Scarcity Projections · Fibonacci Tier Model · Log Scale</div>
+    <div class="fig r" style="border:none; border-top: 1px solid var(--border); background: var(--surface);">
+      <div class="fig-inner" style="padding: 40px;">
+        <svg viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet" id="tokenomics-svg" style="display: block; width: 100%; height: auto;">
+          <!-- Grid -->
+          <g stroke="var(--border)" stroke-width="0.5">
+            <line x1="50" y1="50" x2="50" y2="350" />
+            <line x1="50" y1="350" x2="750" y2="350" />
+            <line x1="50" y1="275" x2="750" y2="275" stroke-dasharray="4 4" opacity="0.3"/>
+            <line x1="50" y1="200" x2="750" y2="200" stroke-dasharray="4 4" opacity="0.3"/>
+            <line x1="50" y1="125" x2="750" y2="125" stroke-dasharray="4 4" opacity="0.3"/>
+          </g>
+
+          <!-- Bars: Token Count (Decreasing) -->
+          <g fill="var(--muted)" fill-opacity="0.2">
+            <rect x="100" y="100" width="30" height="250" class="bar" style="transform-origin: 0 350px; transform: scaleY(0); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);" />
+            <rect x="180" y="140" width="30" height="210" class="bar" style="transform-origin: 0 350px; transform: scaleY(0); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);" />
+            <rect x="260" y="180" width="30" height="170" class="bar" style="transform-origin: 0 350px; transform: scaleY(0); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);" />
+            <rect x="340" y="220" width="30" height="130" class="bar" style="transform-origin: 0 350px; transform: scaleY(0); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);" />
+            <rect x="420" y="260" width="30" height="90" class="bar" style="transform-origin: 0 350px; transform: scaleY(0); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);" />
+            <rect x="500" y="290" width="30" height="60" class="bar" style="transform-origin: 0 350px; transform: scaleY(0); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);" />
+            <rect x="580" y="315" width="30" height="35" class="bar" style="transform-origin: 0 350px; transform: scaleY(0); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);" />
+            <rect x="660" y="330" width="30" height="20" class="bar" style="transform-origin: 0 350px; transform: scaleY(0); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);" />
+          </g>
+
+          <!-- Line: Fund (Linear) -->
+          <path d="M50 350 L750 150" fill="none" stroke="var(--orange)" stroke-width="1.5" stroke-dasharray="6,4" class="line-fund" style="stroke-dashoffset: 1000; stroke-dasharray: 1000; transition: stroke-dashoffset 2s linear 0.5s;" />
+
+          <!-- Curve: MAO Value (Exponential) -->
+          <path d="M50 350 Q 400 350 750 50" fill="none" stroke="var(--gold)" stroke-width="3" stroke-linecap="round" class="curve-value" style="stroke-dashoffset: 1200; stroke-dasharray: 1200; transition: stroke-dashoffset 2.5s ease-out 1s;" />
+          
+          <!-- Axis Labels -->
+          <text x="50" y="375" fill="var(--muted)" font-size="9" font-family="Syne" font-weight="600" opacity="0.6">GENESIS</text>
+          <text x="710" y="375" fill="var(--muted)" font-size="9" font-family="Syne" font-weight="600" opacity="0.6">FUTURE</text>
+        </svg>
+      </div>
+      <div class="fig-cap"><span>Figure 2</span> Tokenomics Value and Scarcity Projections · Fibonacci Tier Model · SVG Dynamic Engine</div>
     </div>
     <div class="chart-notes">
       <div><div class="cn-t">Genesis Multiplier</div><div class="cn-d">Early tiers carry 1000x+ reward multipliers. As protocol complexity increases, reward density decreases — mathematically enforced by Fibonacci tier logic.</div></div>
