@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maollar (MAO) — Decentralized Supply Chain Protocol</title>
+<title data-i18n="page_title">Maollar (MAO) — Decentralized Supply Chain Protocol</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
@@ -89,6 +89,17 @@
     text-transform: uppercase; text-decoration: none; transition: all 0.2s;
   }
   .nav-cta:hover { background: var(--gold-light); }
+
+  .lang-select {
+    appearance: none; background: transparent; border: 1px solid var(--border);
+    color: var(--muted); font-size: 10px; padding: 4px 8px; cursor: pointer;
+    font-family: 'DM Mono', monospace; outline: none; transition: border-color 0.2s;
+  }
+  .lang-select:hover { border-color: var(--gold); color: var(--gold); }
+  
+  [dir="rtl"] { direction: rtl; text-align: right; }
+  [dir="rtl"] .nav-links, [dir="rtl"] .nav-right, [dir="rtl"] .hero-btns, [dir="rtl"] .loop, [dir="rtl"] .ft-top { direction: rtl; }
+  [dir="rtl"] .s-label::after { margin-right: 12px; margin-left: 0; }
 
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
 
@@ -458,71 +469,82 @@
 <nav id="nav">
   <a href="#" class="nav-logo">MAOLLAR</a>
   <ul class="nav-links">
-    <li><a href="#protocol">Protocol</a></li>
-    <li><a href="#tokenomics">Tokenomics</a></li>
-    <li><a href="#compliance">Compliance</a></li>
+    <li><a href="#protocol" data-i18n="nav_protocol">Protocol</a></li>
+    <li><a href="#tokenomics" data-i18n="nav_tokenomics">Tokenomics</a></li>
+    <li><a href="#compliance" data-i18n="nav_compliance">Compliance</a></li>
   </ul>
   <div class="nav-right">
-    <div class="nav-live">Protocol Live</div>
-    <a href="https://shop.maollar.com" class="nav-cta">Enter Mall →</a>
+    <select class="lang-select" id="lang-select" onchange="setLanguage(this.value)">
+      <option value="en">EN</option>
+      <option value="zh">ZH</option>
+      <option value="ja">JA</option>
+      <option value="ko">KO</option>
+      <option value="es">ES</option>
+      <option value="fr">FR</option>
+      <option value="de">DE</option>
+      <option value="th">TH</option>
+      <option value="ar">AR</option>
+    </select>
+    <div class="nav-live" data-i18n="nav_live">Protocol Live</div>
+    <a href="https://shop.maollar.com" class="nav-cta" data-i18n="nav_cta">Enter Mall →</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
   <div class="hero-glow"></div>
-  <div class="hero-badge">MAO · Decentralized Supply Chain Protocol</div>
-  <h1>Consumer<span class="o">-Owned.</span><br><span class="i">Mathematically</span> Appreciating.</h1>
-  <p class="hero-sub">Native AI-Driven Decentralized Supply Chain</p>
-  <p class="hero-desc">
+  <div class="hero-badge" data-i18n="hero_badge">MAO · Decentralized Supply Chain Protocol</div>
+  <h1 data-i18n="hero_h1">Consumer<span class="o">-Owned.</span><br><span class="i">Mathematically</span> Appreciating.</h1>
+  <p class="hero-sub" data-i18n="hero_sub">Native AI-Driven Decentralized Supply Chain</p>
+  <p class="hero-desc" data-i18n="hero_desc">
     The first protocol where every purchase is an act of asset sovereignty.
     No external shareholders. No platform tax. Just mathematics — written into code.
   </p>
   <div class="hero-btns">
-    <a href="https://download.maollar.com" class="btn-p">Download App</a>
-    <a href="https://fund.maollar.com" class="btn-o">Live Treasury</a>
-    <a href="#tokenomics" class="btn-o">Read Protocol ↓</a>
+    <a href="https://download.maollar.com" class="btn-p" data-i18n="hero_btn_app">Download App</a>
+    <a href="https://fund.maollar.com" class="btn-o" data-i18n="hero_btn_treasury">Live Treasury</a>
+    <a href="#tokenomics" class="btn-o" data-i18n="hero_btn_protocol">Read Protocol ↓</a>
   </div>
 </div>
 
 <!-- STATS -->
 <div class="stats r">
   <div class="stat">
-    <div class="stat-l">Total Injected Value</div>
+    <div class="stat-l" data-i18n="stat_tiv_label">Total Injected Value</div>
     <div class="stat-v" id="tiv">$2,841,902</div>
-    <div class="stat-d">USDT · On-chain auditable</div>
+    <div class="stat-d" data-i18n="stat_tiv_desc">USDT · On-chain auditable</div>
   </div>
   <div class="stat">
-    <div class="stat-l">Active MCP Nodes</div>
-    <div class="stat-v">1,024</div>
-    <div class="stat-d">AI procurement endpoints</div>
+    <div class="stat-l" data-i18n="stat_nodes_label">Active MCP Nodes</div>
+    <div class="stat-v" id="nodes_val">1,024</div>
+    <div class="stat-d" data-i18n="stat_nodes_desc">AI procurement endpoints</div>
   </div>
   <div class="stat">
-    <div class="stat-l">Protocol Burn Rate</div>
-    <div class="stat-v">8.4%</div>
-    <div class="stat-d">Circulating supply reduction</div>
+    <div class="stat-l" data-i18n="stat_burn_label">Protocol Burn Rate</div>
+    <div class="stat-v" id="burn_val">8.4%</div>
+    <div class="stat-d" data-i18n="stat_burn_desc">Circulating supply reduction</div>
   </div>
   <div class="stat">
-    <div class="stat-l">Hard Price Boundary</div>
-    <div class="stat-v">≤15%</div>
-    <div class="stat-d">Protocol-enforced markup cap</div>
+    <div class="stat-l" data-i18n="stat_price_label">Hard Price Boundary</div>
+    <div class="stat-v" id="price_val">≤15%</div>
+    <div class="stat-d" data-i18n="stat_price_desc">Protocol-enforced markup cap</div>
   </div>
 </div>
 
 <!-- FORMULA -->
 <div class="formula-band r">
-  <div class="f-label">The Core Equation</div>
+  <div class="f-label" data-i18n="formula_label">The Core Equation</div>
   <div class="f-box">
     <div class="f-eq">
       <span class="fv">P</span>
       <span class="fo">=</span>
       <span class="f-frac">
-        <span class="f-num">MaoDAO Fund (linear growth)</span>
-        <span class="f-den">MAO Supply (Fibonacci decay)</span>
+        <span class="f-num" data-i18n="formula_num">MaoDAO Fund (linear growth)</span>
+        <span class="f-den" data-i18n="formula_den">MAO Supply (Fibonacci decay)</span>
       </span>
     </div>
   </div>
-  <p class="f-note">
+  <p class="f-note" data-i18n="formula_note">
     As the fund numerator grows linearly with every transaction, the supply denominator 
     shrinks exponentially across Fibonacci tiers. Deterministic scarcity — not sentiment.
   </p>
@@ -530,13 +552,13 @@
 
 <!-- 01 BUSINESS MODEL -->
 <section id="protocol">
-  <div class="s-label r">01 — Business Model</div>
-  <h2 class="s-title r">The <em>Vanguard</em> of<br>Digital Commerce</h2>
-  <p class="s-desc r">We benchmark against Vanguard, the world's largest mutual fund. No external shareholders. Every consumption act transformed into a deterministic digital asset.</p>
+  <div class="s-label r" data-i18n="s1_label">01 — Business Model</div>
+  <h2 class="s-title r" data-i18n="s1_title">The <em>Vanguard</em> of<br>Digital Commerce</h2>
+  <p class="s-desc r" data-i18n="s1_desc">We benchmark against Vanguard, the world's largest mutual fund. No external shareholders. Every consumption act transformed into a deterministic digital asset.</p>
   <div class="grid3 r">
-    <div class="card"><span class="ci">⬡</span><div class="ct">Ownership Reversion</div><div class="cd">Not a platform — a decentralized commercial protocol. The consumption premium returns to MAO DAO members on-chain, not to shareholders or advertisers.</div></div>
-    <div class="card"><span class="ci">◈</span><div class="ct">Consumption as Investment</div><div class="cd">Every purchase mints a digital asset that grows alongside global sales volume. Your spending becomes a treasury position — not a fee to a middleman.</div></div>
-    <div class="card"><span class="ci">✦</span><div class="ct">Quality Moat (JQS)</div><div class="cd">Japan Quality Standard integration. Every item is material-compliance verified before entering the protocol. Identical factories as top Japanese labels. 15% hard boundary — enforced by code.</div></div>
+    <div class="card"><span class="ci">⬡</span><div class="ct" data-i18n="s1_c1_t">Ownership Reversion</div><div class="cd" data-i18n="s1_c1_d">Not a platform — a decentralized commercial protocol. The consumption premium returns to MAO DAO members on-chain, not to shareholders or advertisers.</div></div>
+    <div class="card"><span class="ci">◈</span><div class="ct" data-i18n="s1_c2_t">Consumption as Investment</div><div class="cd" data-i18n="s1_c2_d">Every purchase mints a digital asset that grows alongside global sales volume. Your spending becomes a treasury position — not a fee to a middleman.</div></div>
+    <div class="card"><span class="ci">✦</span><div class="ct" data-i18n="s1_c3_t">Quality Moat (JQS)</div><div class="cd" data-i18n="s1_c3_d">Japan Quality Standard integration. Every item is material-compliance verified before entering the protocol. Identical factories as top Japanese labels. 15% hard boundary — enforced by code.</div></div>
   </div>
 </section>
 
@@ -544,13 +566,13 @@
 
 <!-- 02 AI AGENTS -->
 <section>
-  <div class="s-label r">02 — AI Sovereignty</div>
-  <h2 class="s-title r">Reclaiming Selection<br>from <em>Algorithms</em></h2>
-  <p class="s-desc r">Traditional platforms control users through bid-ranking and big-data price discrimination. Maollar returns the power of selection — permanently.</p>
+  <div class="s-label r" data-i18n="s2_label">02 — AI Sovereignty</div>
+  <h2 class="s-title r" data-i18n="s2_title">Reclaiming Selection<br>from <em>Algorithms</em></h2>
+  <p class="s-desc r" data-i18n="s2_desc">Traditional platforms control users through bid-ranking and big-data price discrimination. Maollar returns the power of selection — permanently.</p>
   <div class="grid3 r">
-    <div class="card"><span class="ci">⟁</span><div class="ct">Semantic Supply Chain</div><div class="cd">All products screened via JQS and converted into pure semantic vector data. AI reads protocol truth, not sponsored rankings.</div></div>
-    <div class="card"><span class="ci">⊕</span><div class="ct">Agent-Autonomous Procurement</div><div class="cd">Exclusive API keys. Private AI assistants. Rational comparisons by quality, price, and supply chain provenance — not ad revenue. Silicon-First. Interface-Zero.</div></div>
-    <div class="card"><span class="ci">◯</span><div class="ct">Privacy Sovereignty</div><div class="cd">Shopping intent stays on your local AI. Maollar acts only as data provider and settlement layer — zero access to your behavioral profile.</div></div>
+    <div class="card"><span class="ci">⟁</span><div class="ct" data-i18n="s2_c1_t">Semantic Supply Chain</div><div class="cd" data-i18n="s2_c1_d">All products screened via JQS and converted into pure semantic vector data. AI reads protocol truth, not sponsored rankings.</div></div>
+    <div class="card"><span class="ci">⊕</span><div class="ct" data-i18n="s2_c2_t">Agent-Autonomous Procurement</div><div class="cd" data-i18n="s2_c2_d">Exclusive API keys. Private AI assistants. Rational comparisons by quality, price, and supply chain provenance — not ad revenue. Silicon-First. Interface-Zero.</div></div>
+    <div class="card"><span class="ci">◯</span><div class="ct" data-i18n="s2_c3_t">Privacy Sovereignty</div><div class="cd" data-i18n="s2_c3_d">Shopping intent stays on your local AI. Maollar acts only as data provider and settlement layer — zero access to your behavioral profile.</div></div>
   </div>
   <div class="code r">
 <span class="cb">{</span>
@@ -572,20 +594,20 @@
 
 <!-- 03 PROTOCOL LOOP -->
 <section>
-  <div class="s-label r">03 — Core Protocol Loop</div>
-  <h2 class="s-title r">Seven Steps.<br><em>One Cycle.</em></h2>
-  <p class="s-desc r">From fiat ingress to on-chain asset unfreezing — every step is deterministic, auditable, and mathematically enforced on Solana Mainnet.</p>
+  <div class="s-label r" data-i18n="s3_label">03 — Core Protocol Loop</div>
+  <h2 class="s-title r" data-i18n="s3_title">Seven Steps.<br><em>One Cycle.</em></h2>
+  <p class="s-desc r" data-i18n="s3_desc">From fiat ingress to on-chain asset unfreezing — every step is deterministic, auditable, and mathematically enforced on Solana Mainnet.</p>
   <div class="loop r">
-    <div class="ls"><div class="ln">01</div><div class="lt">Fiat Ingress</div><div class="ld">Users purchase physical goods using mainstream fiat (USD / CNY / EUR). Standard retail checkout — no crypto knowledge required.</div></div>
-    <div class="ls"><div class="ln">02</div><div class="lt">Vector Protocol</div><div class="ld">Supply chain products AI-structured — material, weight, origin — enabling instant agent comprehension at the protocol layer.</div></div>
-    <div class="ls"><div class="ln">03</div><div class="lt">10% Flowback</div><div class="ld">On successful transaction, 10% profit automatically allocated to the audited MaoDAO independent fund. Code-enforced. Immutable.</div></div>
-    <div class="ls"><div class="ln">04</div><div class="lt">Token Anchoring</div><div class="ld">System issues Maocoins at the current Fibonacci Milestone tier. Issuance decreases sharply as milestones advance.</div></div>
+    <div class="ls"><div class="ln">01</div><div class="lt" data-i18n="s3_l1_t">Fiat Ingress</div><div class="ld" data-i18n="s3_l1_d">Users purchase physical goods using mainstream fiat (USD / CNY / EUR). Standard retail checkout — no crypto knowledge required.</div></div>
+    <div class="ls"><div class="ln">02</div><div class="lt" data-i18n="s3_l2_t">Vector Protocol</div><div class="ld" data-i18n="s3_l2_d">Supply chain products AI-structured — material, weight, origin — enabling instant agent comprehension at the protocol layer.</div></div>
+    <div class="ls"><div class="ln">03</div><div class="lt" data-i18n="s3_l3_t">10% Flowback</div><div class="ld" data-i18n="s3_l3_d">On successful transaction, 10% profit automatically allocated to the audited MaoDAO independent fund. Code-enforced. Immutable.</div></div>
+    <div class="ls"><div class="ln">04</div><div class="lt" data-i18n="s3_l4_t">Token Anchoring</div><div class="ld" data-i18n="s3_l4_d">System issues Maocoins at the current Fibonacci Milestone tier. Issuance decreases sharply as milestones advance.</div></div>
   </div>
   <div class="loop r" style="border-top:none;">
-    <div class="ls"><div class="ln">05</div><div class="lt">Merkle Verification</div><div class="ld">Points issuance and holding verified via Merkle Trees on Solana. Every record immutable. Every balance auditable in real-time.</div></div>
-    <div class="ls"><div class="ln">06</div><div class="lt">Asset Unfreezing</div><div class="ld">Points display on payment, formally unfrozen on delivery confirmation. Physical delivery is the cryptographic proof of value release.</div></div>
-    <div class="ls"><div class="ln">07</div><div class="lt">1:1 Redemption</div><div class="ld">Dual-layer isolation: mall handles points; independent clearing gateway converts 1:1 to MAO. Complete business logic decoupling.</div></div>
-    <div class="ls"><div class="ln">∞</div><div class="lt">100% Equity</div><div class="ld">MaoDAO Secured Vault holds 100% equity in MaoMall entity. Management permanently aligned with consumer interests — by protocol, not promise.</div></div>
+    <div class="ls"><div class="ln">05</div><div class="lt" data-i18n="s3_l5_t">Merkle Verification</div><div class="ld" data-i18n="s3_l5_d">Points issuance and holding verified via Merkle Trees on Solana. Every record immutable. Every balance auditable in real-time.</div></div>
+    <div class="ls"><div class="ln">06</div><div class="lt" data-i18n="s3_l6_t">Asset Unfreezing</div><div class="ld" data-i18n="s3_l6_d">Points display on payment, formally unfrozen on delivery confirmation. Physical delivery is the cryptographic proof of value release.</div></div>
+    <div class="ls"><div class="ln">07</div><div class="lt" data-i18n="s3_l7_t">1:1 Redemption</div><div class="ld" data-i18n="s3_l7_d">Dual-layer isolation: mall handles points; independent clearing gateway converts 1:1 to MAO. Complete business logic decoupling.</div></div>
+    <div class="ls"><div class="ln">∞</div><div class="lt" data-i18n="s3_l8_t">100% Equity</div><div class="ld" data-i18n="s3_l8_d">MaoDAO Secured Vault holds 100% equity in MaoMall entity. Management permanently aligned with consumer interests — by protocol, not promise.</div></div>
   </div>
 </section>
 
@@ -594,14 +616,14 @@
 <!-- 04 ARCHITECTURE -->
 <section style="padding: 80px 48px; max-width: 100%;">
   <div style="max-width:1200px; margin:0 auto;">
-    <div class="s-label r">04 — Architecture</div>
-    <h2 class="s-title r">Protocol <em>Architecture</em></h2>
-    <p class="s-desc r">Four nodes, one closed-loop value system. Hover the diagram to reveal in full color.</p>
+    <div class="s-label r" data-i18n="s4_label">04 — Architecture</div>
+    <h2 class="s-title r" data-i18n="s4_title">Protocol <em>Architecture</em></h2>
+    <p class="s-desc r" data-i18n="s4_desc">Four nodes, one closed-loop value system. Hover the diagram to reveal in full color.</p>
   </div>
   <div style="max-width:1200px; margin: 0 auto; padding: 0 48px;">
     <div class="fig r">
       <div class="fig-inner"><img src="Figure_1.png" alt="Maollar Protocol Architecture"></div>
-      <div class="fig-cap"><span>Figure 1</span> Protocol Architecture · MaoDAO Vault · AI Selection Agent · MaoMall · Solana Mainnet</div>
+      <div class="fig-cap"><span data-i18n="gv_fig1">Figure 1</span> <span data-i18n="s4_cap">Protocol Architecture · MaoDAO Vault · AI Selection Agent · MaoMall · Solana Mainnet</span></div>
     </div>
   </div>
 </section>
@@ -610,19 +632,19 @@
 
 <!-- 05 TOKENOMICS -->
 <section id="tokenomics">
-  <div class="s-label r">05 — Tokenomics</div>
-  <h2 class="s-title r">Mathematical<br><em>Asymmetry</em></h2>
-  <p class="s-desc r">Linear treasury growth (fiat) + exponential issuance halving (MAO) = deterministic scarcity. Not a projection. Written into the smart contract.</p>
+  <div class="s-label r" data-i18n="s5_label">05 — Tokenomics</div>
+  <h2 class="s-title r" data-i18n="s5_title">Mathematical<br><em>Asymmetry</em></h2>
+  <p class="s-desc r" data-i18n="s5_desc">Linear treasury growth (fiat) + exponential issuance halving (MAO) = deterministic scarcity. Not a projection. Written into the smart contract.</p>
   <div class="tok2 r">
-    <div class="ti"><div class="tl">Numerator — MaoDAO Fund</div><div class="tv">Linear ↑</div><div class="td">Grows with every purchase. 10% of every transaction flows into the Vault. More consumption = larger numerator = higher intrinsic MAO value.</div></div>
-    <div class="ti"><div class="tl">Denominator — MAO Issuance</div><div class="tv">Decay ↓</div><div class="td">Issuance speed decreases sharply across Fibonacci Milestone tiers. Each tier issues fewer tokens — accelerating scarcity while the fund grows.</div></div>
-    <div class="ti"><div class="tl">Deflationary Burn</div><div class="tv">0.5%</div><div class="td">Every on-chain interaction permanently purges 0.5% of circulating supply from the physical layer. Burn compounds scarcity beyond issuance decay alone.</div></div>
-    <div class="ti"><div class="tl">Genesis Reserve</div><div class="tv">100M</div><div class="td">Initial issuance of 100M Maocoins. Allocated to Raydium/Orca liquidity pools, JQS maintenance, and global API infrastructure.</div></div>
+    <div class="ti"><div class="tl" data-i18n="s5_ti1_l">Numerator — MaoDAO Fund</div><div class="tv" data-i18n="s5_ti1_v">Linear ↑</div><div class="td" data-i18n="s5_ti1_d">Grows with every purchase. 10% of every transaction flows into the Vault. More consumption = larger numerator = higher intrinsic MAO value.</div></div>
+    <div class="ti"><div class="tl" data-i18n="s5_ti2_l">Denominator — MAO Issuance</div><div class="tv" data-i18n="s5_ti2_v">Decay ↓</div><div class="td" data-i18n="s5_ti2_d">Issuance speed decreases sharply across Fibonacci Milestone tiers. Each tier issues fewer tokens — accelerating scarcity while the fund grows.</div></div>
+    <div class="ti"><div class="tl" data-i18n="s5_ti3_l">Deflationary Burn</div><div class="tv">0.5%</div><div class="td" data-i18n="s5_ti3_d">Every on-chain interaction permanently purges 0.5% of circulating supply from the physical layer. Burn compounds scarcity beyond issuance decay alone.</div></div>
+    <div class="ti"><div class="tl" data-i18n="s5_ti4_l">Genesis Reserve</div><div class="tv">100M</div><div class="td" data-i18n="s5_ti4_d">Initial issuance of 100M Maocoins. Allocated to Raydium/Orca liquidity pools, JQS maintenance, and global API infrastructure.</div></div>
   </div>
   <div class="chart-wrap r">
     <div class="chart-head">
-      <div class="chart-t">Value and Scarcity Projections</div>
-      <div class="chart-s">Institutional Grade Analysis — MAO Unit Value (G Series) vs Token Count (D Series) · Hover to reveal in full color</div>
+      <div class="chart-t" data-i18n="s5_chart_t">Value and Scarcity Projections</div>
+      <div class="chart-s" data-i18n="s5_chart_s">Institutional Grade Analysis — MAO Unit Value (G Series) vs Token Count (D Series) · Hover to reveal in full color</div>
     </div>
     <div class="fig r" style="border:none; border-top: 1px solid var(--border); background: var(--surface);">
       <div class="fig-inner" style="padding: 40px;">
@@ -659,12 +681,12 @@
           <text x="710" y="375" fill="var(--muted)" font-size="9" font-family="Syne" font-weight="600" opacity="0.6">FUTURE</text>
         </svg>
       </div>
-      <div class="fig-cap"><span>Figure 2</span> Tokenomics Value and Scarcity Projections · Fibonacci Tier Model · SVG Dynamic Engine</div>
+      <div class="fig-cap"><span data-i18n="gv_fig2">Figure 2</span> <span data-i18n="s5_cap">Tokenomics Value and Scarcity Projections · Fibonacci Tier Model · SVG Dynamic Engine</span></div>
     </div>
     <div class="chart-notes">
-      <div><div class="cn-t">Genesis Multiplier</div><div class="cn-d">Early tiers carry 1000x+ reward multipliers. As protocol complexity increases, reward density decreases — mathematically enforced by Fibonacci tier logic.</div></div>
-      <div><div class="cn-t">Decay Protocol</div><div class="cn-d">MAO token count drops sharply after Genesis tier. Each subsequent level issues exponentially fewer tokens while the MaoDAO fund continues steady linear growth.</div></div>
-      <div><div class="cn-t">Burn Convergence</div><div class="cn-d">Every transaction permanently reduces circulating supply. As volume scales, burn acceleration compounds scarcity beyond what the issuance curve alone projects.</div></div>
+      <div><div class="cn-t" data-i18n="s5_cn1_t">Genesis Multiplier</div><div class="cn-d" data-i18n="s5_cn1_d">Early tiers carry 1000x+ reward multipliers. As protocol complexity increases, reward density decreases — mathematically enforced by Fibonacci tier logic.</div></div>
+      <div><div class="cn-t" data-i18n="s5_cn2_t">Decay Protocol</div><div class="cn-d" data-i18n="s5_cn2_d">MAO token count drops sharply after Genesis tier. Each subsequent level issues exponentially fewer tokens while the MaoDAO fund continues steady linear growth.</div></div>
+      <div><div class="cn-t" data-i18n="s5_cn3_t">Burn Convergence</div><div class="cn-d" data-i18n="s5_cn3_d">Every transaction permanently reduces circulating supply. As volume scales, burn acceleration compounds scarcity beyond what the issuance curve alone projects.</div></div>
     </div>
   </div>
 </section>
@@ -673,18 +695,18 @@
 
 <!-- 06 COMPLIANCE -->
 <section id="compliance">
-  <div class="s-label r">06 — Compliance</div>
-  <h2 class="s-title r">Three-Tier<br><em>Asset Isolation</em></h2>
-  <p class="s-desc r">Registered in Singapore. Legally segregated treasury. On-chain auditable transparency. Designed so management cannot move user assets — by architecture, not by trust.</p>
+  <div class="s-label r" data-i18n="s6_label">06 — Compliance</div>
+  <h2 class="s-title r" data-i18n="s6_title">Three-Tier<br><em>Asset Isolation</em></h2>
+  <p class="s-desc r" data-i18n="s6_desc">Registered in Singapore. Legally segregated treasury. On-chain auditable transparency. Designed so management cannot move user assets — by architecture, not by trust.</p>
   <div class="comp3 r">
-    <div class="ci2"><div class="cn">01</div><div class="ctt">Retail Compliance Layer</div><div class="ctd">Mall front-end operates as a "Consumption Points Incentive Program" — global retail compliance. Zero crypto exposure at point-of-sale.</div></div>
-    <div class="ci2"><div class="cn">02</div><div class="ctt">Independent Clearing Gateway</div><div class="ctd">Points-to-MAO conversions on a physically isolated clearing layer — complete decoupling of retail business logic and digital asset transactions.</div></div>
-    <div class="ci2"><div class="cn">03</div><div class="ctt">Multi-Sig Vault</div><div class="ctd">Funds secured by Segregated Witness and hardware-locked Multi-Signature governance. Fund balances mapped to Solana in real-time.</div></div>
+    <div class="ci2"><div class="cn">01</div><div class="ctt" data-i18n="s6_c1_t">Retail Compliance Layer</div><div class="ctd" data-i18n="s6_c1_d">Mall front-end operates as a "Consumption Points Incentive Program" — global retail compliance. Zero crypto exposure at point-of-sale.</div></div>
+    <div class="ci2"><div class="cn">02</div><div class="ctt" data-i18n="s6_c2_t">Independent Clearing Gateway</div><div class="ctd" data-i18n="s6_c2_d">Points-to-MAO conversions on a physically isolated clearing layer — complete decoupling of retail business logic and digital asset transactions.</div></div>
+    <div class="ci2"><div class="cn">03</div><div class="ctt" data-i18n="s6_c3_t">Multi-Sig Vault</div><div class="ctd" data-i18n="s6_c3_d">Funds secured by Segregated Witness and hardware-locked Multi-Signature governance. Fund balances mapped to Solana in real-time.</div></div>
   </div>
   <div class="grid3 r" style="border-top:none;">
-    <div class="card"><span class="ci">⊟</span><div class="ct">Singapore Foundation</div><div class="cd">Treasury legally siloed via Non-profit Foundation Law. Management cannot access reserves unilaterally — by law and by code.</div></div>
-    <div class="card"><span class="ci">◈</span><div class="ct">Solana · &lt;400ms Finality</div><div class="cd">Mathematical finality in under 400ms on the world's highest-throughput chain. Cryptographic proof on every transaction.</div></div>
-    <div class="card"><span class="ci">⊞</span><div class="ct">Unconditional Buyback</div><div class="cd">MAO is the sole redemption voucher for the fund. Holders can initiate unconditional buyback at fair value at any time — protocol-enforced.</div></div>
+    <div class="card"><span class="ci">⊟</span><div class="ct" data-i18n="s6_c4_t">Singapore Foundation</div><div class="cd" data-i18n="s6_c4_d">Treasury legally siloed via Non-profit Foundation Law. Management cannot access reserves unilaterally — by law and by code.</div></div>
+    <div class="card"><span class="ci">◈</span><div class="ct" data-i18n="s6_c5_t">Solana · &lt;400ms Finality</div><div class="cd" data-i18n="s6_c5_d">Mathematical finality in under 400ms on the world's highest-throughput chain. Cryptographic proof on every transaction.</div></div>
+    <div class="card"><span class="ci">⊞</span><div class="ct" data-i18n="s6_c6_t">Unconditional Buyback</div><div class="cd" data-i18n="s6_c6_d">MAO is the sole redemption voucher for the fund. Holders can initiate unconditional buyback at fair value at any time — protocol-enforced.</div></div>
   </div>
 </section>
 
@@ -693,8 +715,8 @@
 <!-- MANIFESTO -->
 <section style="padding: 80px 48px;">
   <div class="mnf r">
-    <p class="mnf-q">"When you execute a purchase, you are not consuming. You are exercising your <span>Asset Sovereignty</span> through code. Every product is a minted token. Every factory is your node."</p>
-    <div class="mnf-a">— Maollar Protocol Manifesto · On-chain decreed since 2026</div>
+    <p class="mnf-q" data-i18n="mnf_q">"When you execute a purchase, you are not consuming. You are exercising your <span>Asset Sovereignty</span> through code. Every product is a minted token. Every factory is your node."</p>
+    <div class="mnf-a" data-i18n="mnf_a">— Maollar Protocol Manifesto · On-chain decreed since 2026</div>
   </div>
 </section>
 
@@ -704,48 +726,55 @@
     <div class="ft-top">
       <div>
         <div class="ft-logo">MAOLLAR</div>
-        <div class="ft-desc">Autonomous Protocol. Community Owned.<br>Consumer-Owned · AI-Driven · Mathematically Appreciating.<br><br>Registered in Singapore · Settled on Solana Mainnet</div>
+        <div class="ft-desc" data-i18n="ft_desc">Autonomous Protocol. Community Owned.<br>Consumer-Owned · AI-Driven · Mathematically Appreciating.<br><br>Registered in Singapore · Settled on Solana Mainnet</div>
       </div>
       <div>
-        <div class="fc-t">Protocol</div>
+        <div class="fc-t" data-i18n="ft_h_protocol">Protocol</div>
         <ul class="fc-l">
-          <li><a href="https://shop.maollar.com">Enter Mall</a></li>
-          <li><a href="https://fund.maollar.com">Live Treasury</a></li>
-          <li><a href="https://download.maollar.com">Download App</a></li>
+          <li><a href="https://shop.maollar.com" data-i18n="ft_l_mall">Enter Mall</a></li>
+          <li><a href="https://fund.maollar.com" data-i18n="ft_l_treasury">Live Treasury</a></li>
+          <li><a href="https://download.maollar.com" data-i18n="ft_l_app">Download App</a></li>
         </ul>
       </div>
       <div>
-        <div class="fc-t">Governance</div>
+        <div class="fc-t" data-i18n="ft_h_gov">Governance</div>
         <ul class="fc-l">
-          <li><a href="#">MaoDAO</a></li>
-          <li><a href="#">On-chain Audit</a></li>
-          <li><a href="#">Whitepaper</a></li>
-          <li><a href="#">Raydium / Orca</a></li>
+          <li><a href="#" data-i18n="ft_l_dao">MaoDAO</a></li>
+          <li><a href="#" data-i18n="ft_l_audit">On-chain Audit</a></li>
+          <li><a href="#" data-i18n="ft_l_wp">Whitepaper</a></li>
+          <li><a href="#" data-i18n="ft_l_dex">Raydium / Orca</a></li>
         </ul>
       </div>
       <div>
-        <div class="fc-t">Manifesto</div>
+        <div class="fc-t" data-i18n="ft_h_mnf">Manifesto</div>
         <div class="ft-lang">
           <ul class="fc-l">
-            <li><a href="#">English</a></li>
-            <li><a href="#">中文</a></li>
-            <li><a href="#">日本語</a></li>
-            <li><a href="#">한국어</a></li>
-            <li><a href="#">Français</a></li>
+            <li><a href="#" onclick="setLanguage('en')">English</a></li>
+            <li><a href="#" onclick="setLanguage('zh')">中文</a></li>
+            <li><a href="#" onclick="setLanguage('ja')">日本語</a></li>
+            <li><a href="#" onclick="setLanguage('ko')">한국어</a></li>
+            <li><a href="#" onclick="setLanguage('fr')">Français</a></li>
           </ul>
           <ul class="fc-l">
-            <li><a href="#">Español</a></li>
-            <li><a href="#">Deutsch</a></li>
-            <li><a href="#">ภาษาไทย</a></li>
-            <li><a href="#">العربية</a></li>
+            <li><a href="#" onclick="setLanguage('es')">Español</a></li>
+            <li><a href="#" onclick="setLanguage('de')">Deutsch</a></li>
+            <li><a href="#" onclick="setLanguage('th')">ภาษาไทย</a></li>
+            <li><a href="#" onclick="setLanguage('ar')">العربية</a></li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="ft-bot">
-      <span>© Mao Mall Foundation · maollar.com</span>
-      <span class="ft-chain">Live on Solana Mainnet</span>
-    </div>
+      <div class="ft-bot">
+        <span data-i18n="footer_copy">© Mao Mall Foundation · maollar.com</span>
+        <span class="ft-chain" data-i18n="footer_live">Live on Solana Mainnet</span>
+      </div>
+      <!-- WHITEPAPER DOWNLOAD -->
+      <div style="margin-top: 24px; display: flex; gap: 20px; font-size: 10px; opacity: 0.6;">
+        <span style="color: var(--gold); font-weight: 700;">WHITERPAPER:</span>
+        <a href="https://about.maollar.com/Maollar_Whitepaper_EN.pdf" target="_blank" style="color: var(--white); text-decoration: none;">English (EN)</a>
+        <a href="https://about.maollar.com/Maollar_Whitepaper_ZH.pdf" target="_blank" style="color: var(--white); text-decoration: none;">中文 (ZH)</a>
+        <a href="https://about.maollar.com/Maollar_Whitepaper_JA.pdf" target="_blank" style="color: var(--white); text-decoration: none;">日本語 (JA)</a>
+      </div>
   </div>
 </footer>
 
@@ -781,6 +810,56 @@
     document.getElementById('nav').style.borderBottomColor =
       window.scrollY > 60 ? 'rgba(201,168,76,0.2)' : 'rgba(255,255,255,0.07)';
   }, { passive: true });
+
+  // I18N
+  let translations = {};
+
+  async function loadTranslations(lang) {
+    if (translations[lang]) return translations[lang];
+    try {
+      const response = await fetch(`./locales/${lang}.json`);
+      if (!response.ok) throw new Error(`Could not load ${lang} locale`);
+      const data = await response.json();
+      translations[lang] = data;
+      return data;
+    } catch (error) {
+      console.error('Translation error:', error);
+      if (lang !== 'en') return await loadTranslations('en');
+      return null;
+    }
+  }
+
+  async function setLanguage(lang) {
+    localStorage.setItem('maollar-lang', lang);
+    const strings = await loadTranslations(lang);
+    if (!strings) return;
+    
+    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    document.documentElement.setAttribute('lang', lang);
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (strings[key]) {
+        el.innerHTML = strings[key];
+      }
+    });
+
+    const genesisText = document.querySelector('svg text:nth-of-type(1)');
+    const futureText = document.querySelector('svg text:nth-of-type(2)');
+    if (genesisText) genesisText.textContent = strings.gv_genesis;
+    if (futureText) futureText.textContent = strings.gv_future;
+    
+    const select = document.getElementById('lang-select');
+    if (select) select.value = lang;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('maollar-lang');
+    const browser = navigator.language.split('-')[0];
+    const supported = ['en', 'zh', 'ja', 'ko', 'es', 'fr', 'de', 'th', 'ar'];
+    const initial = saved || (supported.includes(browser) ? browser : 'en');
+    setLanguage(initial);
+  });
 </script>
 </body>
 </html>
