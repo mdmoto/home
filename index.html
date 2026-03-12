@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maollar (MAO) — Decentralized Supply Chain Protocol</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --surface: #0f0f0f;
+    --surface2: #161616;
+    --border: rgba(255,255,255,0.07);
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --orange: #e05a1a;
+    --white: #f0ece3;
+    --muted: rgba(240,236,227,0.42);
+    --green: #4caf7d;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.35;
+  }
+
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 64px;
+    background: rgba(8,8,8,0.8);
+    backdrop-filter: blur(24px) saturate(1.5);
+    border-bottom: 1px solid var(--border);
+    transition: border-color 0.3s;
+  }
+
+  .nav-logo { display: flex; align-items: center; text-decoration: none; height: 38px; }
+  .nav-logo img { height: 38px; width: auto; display: block; }
+
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-right { display: flex; align-items: center; gap: 14px; }
+
+  .nav-live {
+    font-size: 10px; letter-spacing: 0.1em; color: var(--muted);
+    border: 1px solid var(--border); padding: 4px 12px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-live::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--green); box-shadow: 0 0 6px var(--green);
+    animation: blink 1.8s ease infinite;
+  }
+
+  .nav-cta {
+    background: var(--gold); color: var(--black);
+    padding: 7px 18px; font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none; transition: all 0.2s;
+  }
+  .nav-cta:hover { background: var(--gold-light); }
+
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+  /* HERO */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center; padding: 120px 24px 80px;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute; top: 40%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(ellipse,
+      rgba(201,168,76,0.07) 0%, rgba(224,90,26,0.03) 40%, transparent 70%);
+    pointer-events: none;
+    animation: glow-pulse 5s ease-in-out infinite;
+  }
+  @keyframes glow-pulse {
+    0%, 100% { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%,-50%) scale(1.12); }
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(201,168,76,0.35);
+    color: var(--gold); font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; padding: 6px 16px; margin-bottom: 36px;
+    animation: fadeUp 0.7s ease both;
+  }
+  .hero-badge::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--green); box-shadow: 0 0 8px var(--green);
+    animation: blink 1.5s ease infinite;
+  }
+
+  .hero-logo {
+    margin-bottom: 28px;
+    animation: fadeUp 0.7s ease 0.05s both;
+  }
+  /* Show the logo-title (with Chinese text) in hero, white version */
+  .hero-logo img {
+    height: 72px; width: auto;
+    /* Invert to white since bg is dark */
+    filter: brightness(0) invert(1);
+    opacity: 0.92;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(40px, 7vw, 84px);
+    font-weight: 800; line-height: 0.92;
+    letter-spacing: -0.03em; margin-bottom: 12px;
+    animation: fadeUp 0.7s ease 0.1s both;
+  }
+  .hero h1 .o { color: var(--orange); }
+  .hero h1 .i { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; }
+
+  .hero-sub {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(16px, 2.4vw, 24px);
+    font-style: italic; color: var(--muted); margin-bottom: 24px;
+    animation: fadeUp 0.7s ease 0.16s both;
+  }
+
+  .hero-desc {
+    max-width: 500px; font-size: 12px; color: var(--muted);
+    line-height: 1.9; margin-bottom: 44px;
+    animation: fadeUp 0.7s ease 0.22s both;
+  }
+
+  .hero-btns {
+    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 0.7s ease 0.28s both;
+  }
+
+  .btn-p {
+    background: var(--gold); color: var(--black);
+    padding: 13px 28px; font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none;
+    transition: all 0.25s; position: relative; overflow: hidden;
+  }
+  .btn-p::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transform: translateX(-100%); transition: transform 0.5s;
+  }
+  .btn-p:hover::after { transform: translateX(100%); }
+  .btn-p:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,0.28); }
+
+  .btn-o {
+    border: 1px solid rgba(255,255,255,0.1); color: var(--muted);
+    padding: 13px 28px; font-family: 'Syne', sans-serif;
+    font-weight: 600; font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none;
+    transition: all 0.25s; background: transparent;
+  }
+  .btn-o:hover { border-color: var(--gold); color: var(--gold); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* STATS */
+  .stats {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+  }
+  .stat {
+    padding: 26px 30px; border-right: 1px solid var(--border);
+    position: relative; transition: background 0.3s;
+  }
+  .stat:last-child { border-right: none; }
+  .stat::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .stat:hover { background: var(--surface2); }
+  .stat:hover::before { opacity: 1; }
+  .stat-l { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+  .stat-v { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--gold); }
+  .stat-d { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+  /* FORMULA */
+  .formula-band {
+    position: relative; z-index: 1;
+    background: var(--surface);
+    border-bottom: 1px solid var(--gold);
+    padding: 56px 48px;
+    text-align: center; overflow: hidden;
+  }
+  .formula-band::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.055) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .f-label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 28px;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+  }
+  .f-label::before, .f-label::after {
+    content: ''; flex: 1; max-width: 72px; height: 1px; background: var(--gold); opacity: 0.4;
+  }
+  .f-box {
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid var(--gold); padding: 28px 56px;
+    background: rgba(201,168,76,0.04); position: relative; gap: 20px;
+  }
+  .f-box::before { content: ''; position: absolute; top: -1px; right: -1px; width: 8px; height: 8px; background: var(--gold); }
+  .f-box::after  { content: ''; position: absolute; bottom: -1px; left: -1px; width: 8px; height: 8px; background: var(--gold); }
+  .f-eq {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(28px, 4.5vw, 52px); font-style: italic;
+    color: var(--white); white-space: nowrap;
+  }
+  .f-eq .fv { color: var(--gold); font-style: normal; font-family: 'Syne', sans-serif; font-weight: 800; }
+  .f-eq .fo { color: var(--muted); margin: 0 10px; }
+  .f-frac { display: inline-flex; flex-direction: column; align-items: center; gap: 3px; vertical-align: middle; }
+  .f-num { border-bottom: 2px solid var(--gold); padding-bottom: 4px; font-size: 0.55em; color: var(--muted); font-style: normal; font-family: 'DM Mono', monospace; }
+  .f-den { font-size: 0.55em; color: var(--muted); font-style: normal; font-family: 'DM Mono', monospace; }
+  .f-note { margin-top: 22px; font-size: 11px; color: var(--muted); max-width: 460px; margin-left: auto; margin-right: auto; }
+
+  /* SECTIONS */
+  section { position: relative; z-index: 1; padding: 88px 48px; max-width: 1200px; margin: 0 auto; }
+
+  .s-label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .s-label::after { content: ''; flex: 1; max-width: 52px; height: 1px; background: var(--gold); opacity: 0.45; }
+
+  .s-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4.2vw, 50px); font-weight: 800;
+    line-height: 1.0; letter-spacing: -0.03em; margin-bottom: 16px;
+  }
+  .s-title em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: var(--gold); }
+
+  .s-desc { font-size: 12px; color: var(--muted); max-width: 500px; line-height: 1.9; margin-bottom: 48px; }
+
+  /* CARDS */
+  .grid3 {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--border); border: 1px solid var(--border);
+  }
+  .card {
+    background: var(--surface); padding: 32px;
+    transition: background 0.3s; position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .card:hover { background: var(--surface2); }
+  .card:hover::before { opacity: 1; }
+  .ci { font-size: 24px; margin-bottom: 16px; display: block; }
+  .ct { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 9px; }
+  .cd { font-size: 11px; color: var(--muted); line-height: 1.8; }
+
+  /* CODE */
+  .code {
+    background: #060606; border: 1px solid var(--border);
+    padding: 28px; font-size: 11.5px; line-height: 1.85;
+    overflow-x: auto; margin-top: 24px;
+  }
+  .code::before {
+    content: 'MCP / 1.2 — Agent-Autonomous-Procurement.json';
+    display: block; font-size: 9px; letter-spacing: 0.15em;
+    color: var(--muted); text-transform: uppercase; margin-bottom: 16px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--border);
+  }
+  .ck { color: var(--gold); }
+  .cs { color: #79c0ff; }
+  .cv { color: var(--green); }
+  .cb { color: rgba(240,236,227,0.28); }
+
+  /* LOOP */
+  .loop {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: var(--border); border: 1px solid var(--border);
+  }
+  .ls { background: var(--surface); padding: 28px 24px; transition: background 0.3s; }
+  .ls:hover { background: var(--surface2); }
+  .ln { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: rgba(201,168,76,0.11); line-height: 1; margin-bottom: 12px; }
+  .lt { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; margin-bottom: 6px; color: var(--gold); }
+  .ld { font-size: 10.5px; color: var(--muted); line-height: 1.75; }
+
+  /* FIGURE */
+  .fig {
+    border: 1px solid var(--border); background: var(--surface2); overflow: hidden;
+    transition: border-color 0.4s;
+  }
+  .fig:hover { border-color: rgba(201,168,76,0.3); }
+  .fig img {
+    width: 100%; display: block;
+    filter: grayscale(55%) brightness(0.88);
+    transition: filter 0.55s ease;
+  }
+  .fig:hover img { filter: grayscale(0%) brightness(1); }
+  .fig-inner { padding: 36px; }
+  .fig-cap {
+    padding: 14px 22px; border-top: 1px solid var(--border);
+    font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); display: flex; justify-content: space-between;
+  }
+  .fig-cap span { color: var(--gold); }
+
+  /* TOKENOMICS */
+  .tok2 {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--border); border: 1px solid var(--border);
+  }
+  .ti { background: var(--surface); padding: 36px; transition: background 0.3s; }
+  .ti:hover { background: var(--surface2); }
+  .tl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .tv { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; color: var(--gold); margin-bottom: 7px; }
+  .td { font-size: 11px; color: var(--muted); line-height: 1.75; }
+
+  .chart-wrap { border: 1px solid var(--border); border-top: none; background: var(--surface); }
+  .chart-head { padding: 32px 36px 0; }
+  .chart-t { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 5px; }
+  .chart-s { font-size: 10.5px; color: var(--muted); margin-bottom: 24px; }
+  .chart-notes {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    padding: 28px 36px; border-top: 1px solid var(--border);
+  }
+  .cn-t { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--gold); margin-bottom: 5px; }
+  .cn-d { font-size: 10.5px; color: var(--muted); line-height: 1.7; }
+
+  /* COMPLIANCE */
+  .comp3 {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--border); border: 1px solid var(--border);
+  }
+  .ci2 { background: var(--surface); padding: 32px; transition: background 0.3s; }
+  .ci2:hover { background: var(--surface2); }
+  .cn { font-family: 'Syne', sans-serif; font-size: 44px; font-weight: 800; color: rgba(201,168,76,0.09); line-height: 1; margin-bottom: 12px; }
+  .ctt { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .ctd { font-size: 11px; color: var(--muted); line-height: 1.75; }
+
+  /* MANIFESTO */
+  .mnf {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 64px 56px; text-align: center; position: relative; overflow: hidden;
+  }
+  .mnf::before {
+    content: '"'; position: absolute; top: -48px; left: 28px;
+    font-family: 'Instrument Serif', serif;
+    font-size: 260px; color: rgba(201,168,76,0.035); line-height: 1; pointer-events: none;
+  }
+  .mnf-q {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(18px, 2.6vw, 28px); font-style: italic;
+    line-height: 1.6; max-width: 700px; margin: 0 auto 24px;
+  }
+  .mnf-q span { color: var(--gold); font-style: normal; }
+  .mnf-a { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+
+  /* FOOTER */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border); background: var(--surface);
+    padding: 52px 48px 32px;
+  }
+  .ft-inner { max-width: 1200px; margin: 0 auto; }
+  .ft-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 44px;
+    padding-bottom: 36px;
+  }
+  .ft-logo { margin-bottom: 14px; }
+  .ft-logo img { height: 30px; width: auto; filter: brightness(0) invert(1); opacity: 0.65; }
+  .ft-desc { font-size: 11px; color: var(--muted); line-height: 1.85; max-width: 220px; }
+  .fc-t { font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; }
+  .fc-l { list-style: none; }
+  .fc-l li { margin-bottom: 8px; }
+  .fc-l a { font-size: 11px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .fc-l a:hover { color: var(--gold); }
+  .ft-lang { display: grid; grid-template-columns: 1fr 1fr; }
+  .ft-bot {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 20px; border-top: 1px solid var(--border);
+    font-size: 10px; color: var(--muted);
+  }
+  .ft-chain { display: flex; align-items: center; gap: 6px; }
+  .ft-chain::before { content: '●'; color: var(--green); font-size: 7px; animation: blink 1.5s ease infinite; }
+
+  /* DIVIDER */
+  .div { width: 100%; height: 1px; background: var(--border); position: relative; z-index: 1; }
+
+  /* REVEAL */
+  .r { opacity: 0; transform: translateY(26px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .r.v { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    nav { padding: 0 20px; }
+    .nav-links, .nav-live { display: none; }
+    section { padding: 56px 20px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .grid3, .loop, .comp3 { grid-template-columns: 1fr; }
+    .tok2 { grid-template-columns: 1fr; }
+    .chart-notes { grid-template-columns: 1fr; }
+    .ft-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .f-box { padding: 20px 28px; }
+    .mnf { padding: 44px 24px; }
+    .fig-inner { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <img src="logo-title.png" alt="maollar 喵樂商城"
+      onerror="this.src='logo.png'; this.style.height='32px'">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#protocol">Protocol</a></li>
+    <li><a href="#tokenomics">Tokenomics</a></li>
+    <li><a href="#compliance">Compliance</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-live">Protocol Live</div>
+    <a href="https://shop.maollar.com" class="nav-cta">Enter Mall →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">MAO · Decentralized Supply Chain Protocol</div>
+  <div class="hero-logo">
+    <img src="logo-title.png" alt="maollar 喵樂商城"
+      onerror="this.src='logo.png'; this.style.height='56px'">
+  </div>
+  <h1>Consumer<span class="o">-Owned.</span><br><span class="i">Mathematically</span> Appreciating.</h1>
+  <p class="hero-sub">Native AI-Driven Decentralized Supply Chain</p>
+  <p class="hero-desc">
+    The first protocol where every purchase is an act of asset sovereignty.
+    No external shareholders. No platform tax. Just mathematics — written into code.
+  </p>
+  <div class="hero-btns">
+    <a href="https://download.maollar.com" class="btn-p">Download App</a>
+    <a href="https://fund.maollar.com" class="btn-o">Live Treasury</a>
+    <a href="#tokenomics" class="btn-o">Read Protocol ↓</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats r">
+  <div class="stat">
+    <div class="stat-l">Total Injected Value</div>
+    <div class="stat-v" id="tiv">$2,841,902</div>
+    <div class="stat-d">USDT · On-chain auditable</div>
+  </div>
+  <div class="stat">
+    <div class="stat-l">Active MCP Nodes</div>
+    <div class="stat-v">1,024</div>
+    <div class="stat-d">AI procurement endpoints</div>
+  </div>
+  <div class="stat">
+    <div class="stat-l">Protocol Burn Rate</div>
+    <div class="stat-v">8.4%</div>
+    <div class="stat-d">Circulating supply reduction</div>
+  </div>
+  <div class="stat">
+    <div class="stat-l">Hard Price Boundary</div>
+    <div class="stat-v">≤15%</div>
+    <div class="stat-d">Protocol-enforced markup cap</div>
+  </div>
+</div>
+
+<!-- FORMULA -->
+<div class="formula-band r">
+  <div class="f-label">The Core Equation</div>
+  <div class="f-box">
+    <div class="f-eq">
+      <span class="fv">P</span>
+      <span class="fo">=</span>
+      <span class="f-frac">
+        <span class="f-num">MaoDAO Fund (linear growth)</span>
+        <span class="f-den">MAO Supply (Fibonacci decay)</span>
+      </span>
+    </div>
+  </div>
+  <p class="f-note">
+    As the fund numerator grows linearly with every transaction, the supply denominator 
+    shrinks exponentially across Fibonacci tiers. Deterministic scarcity — not sentiment.
+  </p>
+</div>
+
+<!-- 01 BUSINESS MODEL -->
+<section id="protocol">
+  <div class="s-label r">01 — Business Model</div>
+  <h2 class="s-title r">The <em>Vanguard</em> of<br>Digital Commerce</h2>
+  <p class="s-desc r">We benchmark against Vanguard, the world's largest mutual fund. No external shareholders. Every consumption act transformed into a deterministic digital asset.</p>
+  <div class="grid3 r">
+    <div class="card"><span class="ci">⬡</span><div class="ct">Ownership Reversion</div><div class="cd">Not a platform — a decentralized commercial protocol. The consumption premium returns to MAO DAO members on-chain, not to shareholders or advertisers.</div></div>
+    <div class="card"><span class="ci">◈</span><div class="ct">Consumption as Investment</div><div class="cd">Every purchase mints a digital asset that grows alongside global sales volume. Your spending becomes a treasury position — not a fee to a middleman.</div></div>
+    <div class="card"><span class="ci">✦</span><div class="ct">Quality Moat (JQS)</div><div class="cd">Japan Quality Standard integration. Every item is material-compliance verified before entering the protocol. Identical factories as top Japanese labels. 15% hard boundary — enforced by code.</div></div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- 02 AI AGENTS -->
+<section>
+  <div class="s-label r">02 — AI Sovereignty</div>
+  <h2 class="s-title r">Reclaiming Selection<br>from <em>Algorithms</em></h2>
+  <p class="s-desc r">Traditional platforms control users through bid-ranking and big-data price discrimination. Maollar returns the power of selection — permanently.</p>
+  <div class="grid3 r">
+    <div class="card"><span class="ci">⟁</span><div class="ct">Semantic Supply Chain</div><div class="cd">All products screened via JQS and converted into pure semantic vector data. AI reads protocol truth, not sponsored rankings.</div></div>
+    <div class="card"><span class="ci">⊕</span><div class="ct">Agent-Autonomous Procurement</div><div class="cd">Exclusive API keys. Private AI assistants. Rational comparisons by quality, price, and supply chain provenance — not ad revenue. Silicon-First. Interface-Zero.</div></div>
+    <div class="card"><span class="ci">◯</span><div class="ct">Privacy Sovereignty</div><div class="cd">Shopping intent stays on your local AI. Maollar acts only as data provider and settlement layer — zero access to your behavioral profile.</div></div>
+  </div>
+  <div class="code r">
+<span class="cb">{</span>
+  <span class="ck">"agent"</span><span class="cb">:</span> <span class="cs">"Autonomous-Procurement-Unit-07"</span><span class="cb">,</span>
+  <span class="ck">"protocol"</span><span class="cb">:</span> <span class="cs">"MCP/1.2"</span><span class="cb">,</span>
+  <span class="ck">"action"</span><span class="cb">:</span> <span class="cs">"execute_buy_decree"</span><span class="cb">,</span>
+  <span class="ck">"parameters"</span><span class="cb">:</span> <span class="cb">{</span>
+    <span class="ck">"factory_node"</span><span class="cb">:</span> <span class="cs">"JP-SK2-CORE"</span><span class="cb">,</span>
+    <span class="ck">"item_hash"</span><span class="cb">:</span> <span class="cs">"0x89...2f"</span><span class="cb">,</span>
+    <span class="ck">"quality_cert"</span><span class="cb">:</span> <span class="cs">"JQS-VERIFIED"</span><span class="cb">,</span>
+    <span class="ck">"settlement"</span><span class="cb">:</span> <span class="cs">"ProtocolSurplus"</span>
+  <span class="cb">}</span><span class="cb">,</span>
+  <span class="ck">"status"</span><span class="cb">:</span> <span class="cv">"DECREE_EXECUTED"</span>
+<span class="cb">}</span>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- 03 PROTOCOL LOOP -->
+<section>
+  <div class="s-label r">03 — Core Protocol Loop</div>
+  <h2 class="s-title r">Seven Steps.<br><em>One Cycle.</em></h2>
+  <p class="s-desc r">From fiat ingress to on-chain asset unfreezing — every step is deterministic, auditable, and mathematically enforced on Solana Mainnet.</p>
+  <div class="loop r">
+    <div class="ls"><div class="ln">01</div><div class="lt">Fiat Ingress</div><div class="ld">Users purchase physical goods using mainstream fiat (USD / CNY / EUR). Standard retail checkout — no crypto knowledge required.</div></div>
+    <div class="ls"><div class="ln">02</div><div class="lt">Vector Protocol</div><div class="ld">Supply chain products AI-structured — material, weight, origin — enabling instant agent comprehension at the protocol layer.</div></div>
+    <div class="ls"><div class="ln">03</div><div class="lt">10% Flowback</div><div class="ld">On successful transaction, 10% profit automatically allocated to the audited MaoDAO independent fund. Code-enforced. Immutable.</div></div>
+    <div class="ls"><div class="ln">04</div><div class="lt">Token Anchoring</div><div class="ld">System issues Maocoins at the current Fibonacci Milestone tier. Issuance decreases sharply as milestones advance.</div></div>
+  </div>
+  <div class="loop r" style="border-top:none;">
+    <div class="ls"><div class="ln">05</div><div class="lt">Merkle Verification</div><div class="ld">Points issuance and holding verified via Merkle Trees on Solana. Every record immutable. Every balance auditable in real-time.</div></div>
+    <div class="ls"><div class="ln">06</div><div class="lt">Asset Unfreezing</div><div class="ld">Points display on payment, formally unfrozen on delivery confirmation. Physical delivery is the cryptographic proof of value release.</div></div>
+    <div class="ls"><div class="ln">07</div><div class="lt">1:1 Redemption</div><div class="ld">Dual-layer isolation: mall handles points; independent clearing gateway converts 1:1 to MAO. Complete business logic decoupling.</div></div>
+    <div class="ls"><div class="ln">∞</div><div class="lt">100% Equity</div><div class="ld">MaoDAO Secured Vault holds 100% equity in MaoMall entity. Management permanently aligned with consumer interests — by protocol, not promise.</div></div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- 04 ARCHITECTURE -->
+<section style="padding: 80px 48px; max-width: 100%;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="s-label r">04 — Architecture</div>
+    <h2 class="s-title r">Protocol <em>Architecture</em></h2>
+    <p class="s-desc r">Four nodes, one closed-loop value system. Hover the diagram to reveal in full color.</p>
+  </div>
+  <div style="max-width:1200px; margin: 0 auto; padding: 0 48px;">
+    <div class="fig r">
+      <div class="fig-inner"><img src="Figure_1.png" alt="Maollar Protocol Architecture"></div>
+      <div class="fig-cap"><span>Figure 1</span> Protocol Architecture · MaoDAO Vault · AI Selection Agent · MaoMall · Solana Mainnet</div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- 05 TOKENOMICS -->
+<section id="tokenomics">
+  <div class="s-label r">05 — Tokenomics</div>
+  <h2 class="s-title r">Mathematical<br><em>Asymmetry</em></h2>
+  <p class="s-desc r">Linear treasury growth (fiat) + exponential issuance halving (MAO) = deterministic scarcity. Not a projection. Written into the smart contract.</p>
+  <div class="tok2 r">
+    <div class="ti"><div class="tl">Numerator — MaoDAO Fund</div><div class="tv">Linear ↑</div><div class="td">Grows with every purchase. 10% of every transaction flows into the Vault. More consumption = larger numerator = higher intrinsic MAO value.</div></div>
+    <div class="ti"><div class="tl">Denominator — MAO Issuance</div><div class="tv">Decay ↓</div><div class="td">Issuance speed decreases sharply across Fibonacci Milestone tiers. Each tier issues fewer tokens — accelerating scarcity while the fund grows.</div></div>
+    <div class="ti"><div class="tl">Deflationary Burn</div><div class="tv">0.5%</div><div class="td">Every on-chain interaction permanently purges 0.5% of circulating supply from the physical layer. Burn compounds scarcity beyond issuance decay alone.</div></div>
+    <div class="ti"><div class="tl">Genesis Reserve</div><div class="tv">100M</div><div class="td">Initial issuance of 100M Maocoins. Allocated to Raydium/Orca liquidity pools, JQS maintenance, and global API infrastructure.</div></div>
+  </div>
+  <div class="chart-wrap r">
+    <div class="chart-head">
+      <div class="chart-t">Value and Scarcity Projections</div>
+      <div class="chart-s">Institutional Grade Analysis — MAO Unit Value (G Series) vs Token Count (D Series) · Hover to reveal in full color</div>
+    </div>
+    <div class="fig" style="border:none; border-top: 1px solid var(--border);">
+      <div class="fig-inner"><img src="Figure_2.png" alt="Maollar Tokenomics Growth Curve"></div>
+      <div class="fig-cap"><span>Figure 2</span> Tokenomics Value and Scarcity Projections · Fibonacci Tier Model · Log Scale</div>
+    </div>
+    <div class="chart-notes">
+      <div><div class="cn-t">Genesis Multiplier</div><div class="cn-d">Early tiers carry 1000x+ reward multipliers. As protocol complexity increases, reward density decreases — mathematically enforced by Fibonacci tier logic.</div></div>
+      <div><div class="cn-t">Decay Protocol</div><div class="cn-d">MAO token count drops sharply after Genesis tier. Each subsequent level issues exponentially fewer tokens while the MaoDAO fund continues steady linear growth.</div></div>
+      <div><div class="cn-t">Burn Convergence</div><div class="cn-d">Every transaction permanently reduces circulating supply. As volume scales, burn acceleration compounds scarcity beyond what the issuance curve alone projects.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- 06 COMPLIANCE -->
+<section id="compliance">
+  <div class="s-label r">06 — Compliance</div>
+  <h2 class="s-title r">Three-Tier<br><em>Asset Isolation</em></h2>
+  <p class="s-desc r">Registered in Singapore. Legally segregated treasury. On-chain auditable transparency. Designed so management cannot move user assets — by architecture, not by trust.</p>
+  <div class="comp3 r">
+    <div class="ci2"><div class="cn">01</div><div class="ctt">Retail Compliance Layer</div><div class="ctd">Mall front-end operates as a "Consumption Points Incentive Program" — global retail compliance. Zero crypto exposure at point-of-sale.</div></div>
+    <div class="ci2"><div class="cn">02</div><div class="ctt">Independent Clearing Gateway</div><div class="ctd">Points-to-MAO conversions on a physically isolated clearing layer — complete decoupling of retail business logic and digital asset transactions.</div></div>
+    <div class="ci2"><div class="cn">03</div><div class="ctt">Multi-Sig Vault</div><div class="ctd">Funds secured by Segregated Witness and hardware-locked Multi-Signature governance. Fund balances mapped to Solana in real-time.</div></div>
+  </div>
+  <div class="grid3 r" style="border-top:none;">
+    <div class="card"><span class="ci">⊟</span><div class="ct">Singapore Foundation</div><div class="cd">Treasury legally siloed via Non-profit Foundation Law. Management cannot access reserves unilaterally — by law and by code.</div></div>
+    <div class="card"><span class="ci">◈</span><div class="ct">Solana · &lt;400ms Finality</div><div class="cd">Mathematical finality in under 400ms on the world's highest-throughput chain. Cryptographic proof on every transaction.</div></div>
+    <div class="card"><span class="ci">⊞</span><div class="ct">Unconditional Buyback</div><div class="cd">MAO is the sole redemption voucher for the fund. Holders can initiate unconditional buyback at fair value at any time — protocol-enforced.</div></div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- MANIFESTO -->
+<section style="padding: 80px 48px;">
+  <div class="mnf r">
+    <p class="mnf-q">"When you execute a purchase, you are not consuming. You are exercising your <span>Asset Sovereignty</span> through code. Every product is a minted token. Every factory is your node."</p>
+    <div class="mnf-a">— Maollar Protocol Manifesto · On-chain decreed since 2026</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-top">
+      <div>
+        <div class="ft-logo">
+          <img src="logo-title.png" alt="maollar" onerror="this.src='logo.png'; this.style.height='26px'">
+        </div>
+        <div class="ft-desc">Autonomous Protocol. Community Owned.<br>Consumer-Owned · AI-Driven · Mathematically Appreciating.<br><br>Registered in Singapore · Settled on Solana Mainnet</div>
+      </div>
+      <div>
+        <div class="fc-t">Protocol</div>
+        <ul class="fc-l">
+          <li><a href="https://shop.maollar.com">Enter Mall</a></li>
+          <li><a href="https://fund.maollar.com">Live Treasury</a></li>
+          <li><a href="https://download.maollar.com">Download App</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="fc-t">Governance</div>
+        <ul class="fc-l">
+          <li><a href="#">MaoDAO</a></li>
+          <li><a href="#">On-chain Audit</a></li>
+          <li><a href="#">Whitepaper</a></li>
+          <li><a href="#">Raydium / Orca</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="fc-t">Manifesto</div>
+        <div class="ft-lang">
+          <ul class="fc-l">
+            <li><a href="#">English</a></li>
+            <li><a href="#">中文</a></li>
+            <li><a href="#">日本語</a></li>
+            <li><a href="#">한국어</a></li>
+            <li><a href="#">Français</a></li>
+          </ul>
+          <ul class="fc-l">
+            <li><a href="#">Español</a></li>
+            <li><a href="#">Deutsch</a></li>
+            <li><a href="#">ภาษาไทย</a></li>
+            <li><a href="#">العربية</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span>© Mao Mall Foundation · maollar.com</span>
+      <span class="ft-chain">Live on Solana Mainnet</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('v'), i * 50);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.r').forEach(el => obs.observe(el));
+
+  // CountUp
+  const tivEl = document.getElementById('tiv');
+  const tivObs = new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting) return;
+    let v = 0; const target = 2841902;
+    const step = target / (1800 / 16);
+    const t = setInterval(() => {
+      v = Math.min(v + step, target);
+      tivEl.textContent = '$' + Math.floor(v).toLocaleString();
+      if (v >= target) clearInterval(t);
+    }, 16);
+    tivObs.disconnect();
+  });
+  tivObs.observe(tivEl);
+
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').style.borderBottomColor =
+      window.scrollY > 60 ? 'rgba(201,168,76,0.2)' : 'rgba(255,255,255,0.07)';
+  }, { passive: true });
+</script>
+</body>
+</html>
