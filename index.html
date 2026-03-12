@@ -829,6 +829,19 @@
     }
   }
 
+  function getMallUrl(lang) {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const baseUrl = isMobile ? 'https://m.maollar.com' : 'https://shop.maollar.com';
+    return `${baseUrl}?lang=${lang}`;
+  }
+
+  function updateMallLinks(lang) {
+    const url = getMallUrl(lang);
+    document.querySelectorAll('[data-i18n="nav_cta"], [data-i18n="ft_l_mall"]').forEach(el => {
+      el.href = url;
+    });
+  }
+
   async function setLanguage(lang) {
     localStorage.setItem('maollar-lang', lang);
     const strings = await loadTranslations(lang);
@@ -851,6 +864,8 @@
     
     const select = document.getElementById('lang-select');
     if (select) select.value = lang;
+
+    updateMallLinks(lang);
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -860,6 +875,7 @@
     const initial = saved || (supported.includes(browser) ? browser : 'en');
     setLanguage(initial);
   });
+
 </script>
 </body>
 </html>
