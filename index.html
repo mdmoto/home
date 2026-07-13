@@ -32,19 +32,12 @@
     overflow-x: hidden;
   }
 
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 9999; opacity: 0.35;
-  }
-
   body::after {
     content: '';
     position: fixed; inset: 0;
     background-image:
-      linear-gradient(rgba(201,168,76,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(201,168,76,0.025) 1px, transparent 1px);
+      linear-gradient(rgba(201,168,76,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.02) 1px, transparent 1px);
     background-size: 60px 60px;
     pointer-events: none; z-index: 0;
   }
@@ -110,58 +103,56 @@
     justify-content: center; align-items: center;
     text-align: center; padding: 120px 24px 80px;
     overflow: hidden;
+    background: radial-gradient(circle at 50% 50%, rgba(201,168,76,0.05) 0%, transparent 70%);
   }
 
   .hero-glow {
     position: absolute; top: 40%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 800px; height: 800px;
-    background: radial-gradient(ellipse,
-      rgba(201,168,76,0.07) 0%, rgba(224,90,26,0.03) 40%, transparent 70%);
+    width: 80vw; height: 80vw;
+    background: radial-gradient(circle,
+      rgba(201,168,76,0.08) 0%, rgba(224,90,26,0.04) 40%, transparent 70%);
     pointer-events: none;
-    animation: glow-pulse 5s ease-in-out infinite;
+    animation: glow-pulse 8s ease-in-out infinite;
+    filter: blur(60px);
   }
   @keyframes glow-pulse {
-    0%, 100% { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
-    50% { opacity: 1; transform: translate(-50%,-50%) scale(1.12); }
+    0%, 100% { opacity: 0.5; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%,-50%) scale(1.1); }
   }
 
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
-    border: 1px solid rgba(201,168,76,0.35);
-    color: var(--gold); font-size: 10px; letter-spacing: 0.18em;
-    text-transform: uppercase; padding: 6px 16px; margin-bottom: 36px;
-    animation: fadeUp 0.7s ease both;
+    border: 1px solid rgba(201,168,76,0.3);
+    background: rgba(201,168,76,0.05);
+    color: var(--gold); font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 8px 20px; margin-bottom: 32px;
+    animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    backdrop-filter: blur(4px);
   }
-  .hero-badge::before {
-    content: ''; width: 5px; height: 5px; border-radius: 50%;
-    background: var(--green); box-shadow: 0 0 8px var(--green);
-    animation: blink 1.5s ease infinite;
-  }
-
-  /* HERO headings */
 
   .hero h1 {
     font-family: 'Syne', sans-serif;
-    font-size: clamp(40px, 7vw, 84px);
-    font-weight: 800; line-height: 0.92;
-    letter-spacing: -0.03em; margin-bottom: 12px;
-    animation: fadeUp 0.7s ease 0.1s both;
+    font-size: clamp(36px, 8vw, 84px);
+    font-weight: 800; line-height: 1.0;
+    letter-spacing: -0.03em; margin-bottom: 20px;
+    animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s both;
   }
-  .hero h1 .o { color: var(--orange); }
-  .hero h1 .i { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; }
+  .hero h1 .o { color: var(--orange); text-shadow: 0 0 30px rgba(224,90,26,0.3); }
+  .hero h1 .i { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: var(--gold); }
 
   .hero-sub {
     font-family: 'Instrument Serif', serif;
-    font-size: clamp(16px, 2.4vw, 24px);
-    font-style: italic; color: var(--muted); margin-bottom: 24px;
-    animation: fadeUp 0.7s ease 0.16s both;
+    font-size: clamp(18px, 3vw, 28px);
+    font-style: italic; color: var(--white); margin-bottom: 28px;
+    animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s both;
+    opacity: 0.9;
   }
 
   .hero-desc {
-    max-width: 500px; font-size: 12px; color: var(--muted);
-    line-height: 1.9; margin-bottom: 44px;
-    animation: fadeUp 0.7s ease 0.22s both;
+    max-width: 540px; font-size: 13px; color: var(--muted);
+    line-height: 1.8; margin-bottom: 48px;
+    animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s both;
   }
 
   .hero-btns {
@@ -770,7 +761,7 @@
       </div>
       <!-- WHITEPAPER DOWNLOAD -->
       <div style="margin-top: 24px; display: flex; gap: 20px; font-size: 10px; opacity: 0.6;">
-        <span style="color: var(--gold); font-weight: 700;">WHITERPAPER:</span>
+        <span style="color: var(--gold); font-weight: 700;">WHITEPAPER:</span>
         <a href="https://pub-52cfa058efcc498eb28c64d7af72cf06.r2.dev/Maollar%20White%20paper1.0.pdf" download="Maollar_Whitepaper_EN.pdf" target="_blank" style="color: var(--white); text-decoration: none;">English (EN)</a>
         <a href="https://pub-52cfa058efcc498eb28c64d7af72cf06.r2.dev/Maollar%E7%99%BD%E7%9A%AE%E4%B9%A61.0.pdf" download="Maollar_Whitepaper_ZH.pdf" target="_blank" style="color: var(--white); text-decoration: none;">中文 (ZH)</a>
         <a href="https://pub-52cfa058efcc498eb28c64d7af72cf06.r2.dev/Maollar%20jp%201.0.pdf" download="Maollar_Whitepaper_JA.pdf" target="_blank" style="color: var(--white); text-decoration: none;">日本語 (JA)</a>
