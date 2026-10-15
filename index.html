@@ -507,30 +507,6 @@
   </div>
 </div>
 
-<!-- STATS -->
-<div class="stats r">
-  <div class="stat">
-    <div class="stat-l" data-i18n="stat_tiv_label">Total Injected Value</div>
-    <div class="stat-v" id="tiv">$2,841,902</div>
-    <div class="stat-d" data-i18n="stat_tiv_desc">USDT · On-chain auditable</div>
-  </div>
-  <div class="stat">
-    <div class="stat-l" data-i18n="stat_nodes_label">Active MCP Nodes</div>
-    <div class="stat-v" id="nodes_val">1,024</div>
-    <div class="stat-d" data-i18n="stat_nodes_desc">AI procurement endpoints</div>
-  </div>
-  <div class="stat">
-    <div class="stat-l" data-i18n="stat_burn_label">Protocol Burn Rate</div>
-    <div class="stat-v" id="burn_val">8.4%</div>
-    <div class="stat-d" data-i18n="stat_burn_desc">Circulating supply reduction</div>
-  </div>
-  <div class="stat">
-    <div class="stat-l" data-i18n="stat_price_label">Hard Price Boundary</div>
-    <div class="stat-v" id="price_val">≤15%</div>
-    <div class="stat-d" data-i18n="stat_price_desc">Protocol-enforced markup cap</div>
-  </div>
-</div>
-
 <!-- FORMULA -->
 <div class="formula-band r">
   <div class="f-label" data-i18n="formula_label">The Core Equation</div>
@@ -716,7 +692,7 @@
 <section style="padding: 80px 48px;">
   <div class="mnf r">
     <p class="mnf-q" data-i18n="mnf_q">"When you execute a purchase, you are not consuming. You are exercising your <span>Asset Sovereignty</span> through code. Every product is a minted token. Every factory is your node."</p>
-    <div class="mnf-a" data-i18n="mnf_a">— Maollar Protocol Manifesto · On-chain decreed since 2026</div>
+    <div class="mnf-a" data-i18n="mnf_a">— Maollar Protocol Manifesto · On-chain decreed since 2027</div>
   </div>
 </section>
 
@@ -791,21 +767,6 @@
     });
   }, { threshold: 0.07 });
   document.querySelectorAll('.r').forEach(el => obs.observe(el));
-
-  // CountUp
-  const tivEl = document.getElementById('tiv');
-  const tivObs = new IntersectionObserver(([e]) => {
-    if (!e.isIntersecting) return;
-    let v = 0; const target = 2841902;
-    const step = target / (1800 / 16);
-    const t = setInterval(() => {
-      v = Math.min(v + step, target);
-      tivEl.textContent = '$' + Math.floor(v).toLocaleString();
-      if (v >= target) clearInterval(t);
-    }, 16);
-    tivObs.disconnect();
-  });
-  tivObs.observe(tivEl);
 
   // Nav scroll
   window.addEventListener('scroll', () => {
