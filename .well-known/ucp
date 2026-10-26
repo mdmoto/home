@@ -1,0 +1,76 @@
+{
+  "ucp": {
+    "version": "2026-08-25",
+    "merchant": {
+      "name": "MaoMall (Maollar)",
+      "domain": "maollar.com",
+      "nature": "Zero-profit consumer-owned commerce platform",
+      "positioning": "Independent, objective, evidence-backed product truth for personal AI agents"
+    },
+    "services": {
+      "dev.ucp.shopping": {
+        "version": "2026-08-25",
+        "spec": "https://ucp.dev/specs/shopping",
+        "rest": {
+          "endpoint": "https://api.maollar.com/api/v1/ai",
+          "schema": "https://api.maollar.com/api/v1/ai/schema"
+        },
+        "mcp": {
+          "endpoint": "https://api.maollar.com/api/v1/ai/mcp",
+          "protocol": "mcp:2024-11-05"
+        }
+      }
+    },
+    "capabilities": [
+      {
+        "name": "dev.ucp.shopping.catalog",
+        "version": "2026-08-25",
+        "spec": "https://ucp.dev/specs/shopping/catalog",
+        "endpoints": {
+          "search": "https://api.maollar.com/api/v1/ai/products/search"
+        }
+      },
+      {
+        "name": "dev.ucp.shopping.cart",
+        "version": "2026-08-25",
+        "spec": "https://ucp.dev/specs/shopping/cart",
+        "endpoints": {
+          "draft": "https://api.maollar.com/api/v1/ai/cart/draft",
+          "load_draft": "https://api.maollar.com/api/v1/ai/cart/load_draft/{draftId}"
+        }
+      },
+      {
+        "name": "dev.ucp.shopping.checkout",
+        "version": "2026-08-25",
+        "spec": "https://ucp.dev/specs/shopping/checkout",
+        "handoff_url": "https://shop.maollar.com/pay?draft_id={draftId}"
+      },
+      {
+        "name": "org.maollar.zero_profit_evidence",
+        "version": "2026-08-25",
+        "spec": "https://maollar.com/protocol/specs/zero-profit-evidence",
+        "description": "Immutable supplier cost, operational expense, and 0-profit retail price audit chain",
+        "extends": "dev.ucp.shopping.catalog"
+      },
+      {
+        "name": "org.maollar.chain_audit",
+        "version": "2026-08-25",
+        "spec": "https://maollar.com/protocol/specs/solana-audit",
+        "network": "Solana",
+        "transparency_endpoint": "https://api.maollar.com/api/v1/transparency/maocoin"
+      }
+    ],
+    "payment_handlers": [
+      {
+        "id": "ap2_checkout_mandate",
+        "name": "Agent Payments Protocol - Checkout Mandate",
+        "spec": "https://ucp.dev/specs/payments/ap2",
+        "requires_human_confirmation": true
+      },
+      {
+        "id": "maollar_member_wallet",
+        "name": "MaoMall Pre-funded Balance Wallet"
+      }
+    ]
+  }
+}
